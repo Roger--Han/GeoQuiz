@@ -1,5 +1,6 @@
 package com.example.roger.geoquiz;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "QuizActivity";
 
+
     private Button mTureButton;
     private Button mFalseButton;
+    private Button mCheatButton;
     private Button mNextButton;
     private Button mPrevButton;
     private TextView mQuestionTextView;
@@ -38,6 +41,16 @@ public class MainActivity extends AppCompatActivity {
         mTureButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
 
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mCheatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, cheatActivity.class);
+                boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismTrueQuestion();
+                i.putExtra(cheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
+                startActivity(i);
+            }
+        });
         mTureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
