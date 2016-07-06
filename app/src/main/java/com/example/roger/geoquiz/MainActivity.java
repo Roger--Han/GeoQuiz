@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, cheatActivity.class);
                 boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismTrueQuestion();
                 i.putExtra(cheatActivity.EXTRA_ANSWER_IS_TRUE, answerIsTrue);
-                startActivity(i);
+                startActivityForResult(i, 0);
             }
         });
         mTureButton.setOnClickListener(new View.OnClickListener() {
