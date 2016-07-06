@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Button mPrevButton;
     private TextView mQuestionTextView;
     private int mCurrentIndex = 0;
+    private boolean mIsCheater;
+
+
 
     private TrueFalse[] mQuestionBank = new TrueFalse[]{
         new TrueFalse(R.string.question_oceans, true),
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
             new TrueFalse(R.string.question_americas, true),
             new TrueFalse(R.string.question_asia, true),
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (data == null){
+            return;
+        }
+        mIsCheater = data.getBooleanExtra(cheatActivity.EXTRA_ANSWER_SHOWN, false);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mCurrentIndex = (mCurrentIndex + 1) % mQuestionBank.length;
+                mIsCheater = false;
                 updateQuestion();
 
             }
@@ -125,10 +137,20 @@ public class MainActivity extends AppCompatActivity {
         boolean answerIsTrue = mQuestionBank[mCurrentIndex].ismTrueQuestion();
         int messageResId = 0;
 
-        if(userPressedTrue == answerIsTrue){
-            messageResId = R.string.correct_toast;
-        }else {
-            messageResId = R.string.false_toast;
+//        if(userPressedTrue == answerIsTrue){
+//            messageResId = R.string.correct_toast;
+//        }else {
+//            messageResId = R.string.false_toast;
+//        }
+
+        if(mIsCheater){
+            messageResId = R.string.judgment_toast;
+        }else{
+            if(userPressedTrue == answerIsTrue){
+                messageResId = R.string.correct_toast;
+            } else {
+                messageResId = R.string.false_toast;
+            }
         }
         Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }

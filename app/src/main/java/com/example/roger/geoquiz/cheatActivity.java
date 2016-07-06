@@ -44,6 +44,7 @@ public class cheatActivity extends AppCompatActivity {
     private void setAnswerShownResult(boolean isAnswerShown){
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
+        // send data back to the parent
         setResult(RESULT_OK, data);
 
     }
